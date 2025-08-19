@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacking Simulator</title>
+  <style>
+    body {
+      background: black;
+      color: limegreen;
+      font-family: monospace;
+      font-size: 20px;
+      padding: 20px;
+    }
+
+    .message {
+      margin: 5px 0;
+    }
+
+    .dots::after {
+      content: "...";
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+
+  <script>
+    const messages = [
+      "Initializing Hacking",
+      "Reading your Files",
+      "Password files Detected",
+      "Sending all passwords and personal files to server",
+      "Cleaning up"
+    ];
+
+    const terminal = document.getElementById("terminal");
+
+    function showMessage(text, delay) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const msg = document.createElement("div");
+          msg.className = "message dots";
+          msg.textContent = text;
+          terminal.appendChild(msg);
+          resolve();
+        }, delay);
+      });
+    }
+
+    async function startHacking() {
+      for (let msg of messages) {
+        let delay = Math.floor(Math.random() * 7000) + 1000; // 1–7 seconds
+        await showMessage(msg, delay);
+      }
+      // Final Done Message
+      setTimeout(() => {
+        const done = document.createElement("div");
+        done.className = "message";
+        done.textContent = "✅ Hacking Complete!";
+        terminal.appendChild(done);
+      }, 1000);
+    }
+
+    startHacking();
+  </script>
+</body>
+</html>
